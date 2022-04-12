@@ -1,2 +1,6 @@
 # CENG423-Project
 Simple Task Management
+* Sümeyra YANARDAĞ - 17050111029
+* Hümeyra TEZCAN - 18050111039
+* Berna ALTUN - 16050111040
+* Feyza ÜRKUT - 17050111015
