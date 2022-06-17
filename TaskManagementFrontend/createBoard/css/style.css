@@ -1,0 +1,169 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+.form {
+    border-radius: 3px;
+    padding: 10px 15px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.input {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 7px 10px;
+    border-radius: 2px;
+    color: #fff;
+    background-color: #554c57;
+    border: none;
+}
+
+.label {
+    width: 100%;
+    display: block;
+}
+
+.button {
+    width: 100%;
+    margin: 15px 0;
+    background-color: #785580;
+    border: none;
+    color: #fff;
+    border-radius: 2px;
+    padding: 7px 10px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+table {
+    border-collapse: collapse;
+    background: white;
+    color: black;
+}
+
+th,
+td {
+    font-weight: bold;
+}
+
+.row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    padding: 10px;
+}
+
+.cell {
+    min-height: 75px;
+    flex-grow: 1;
+    flex-basis: 100%;
+}
+
+#iff8 {
+    color: #ffffff;
+}
+
+#icwxq {
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .row {
+        flex-wrap: wrap;
+    }
+}
+
+nav {
+    width: 100%;
+}
+
+nav ul ul {
+    display: none;
+}
+
+nav ul li:hover>ul {
+    display: block;
+}
+
+nav ul {
+    background: linear-gradient(135deg, red, blue);
+    box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.15);
+    padding: 0 20px;
+    border-radius: 10px;
+    list-style: none;
+    position: relative;
+    display: inline-table;
+}
+
+nav ul:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+
+nav ul li:hover {
+    background: #4b545f;
+    background: linear-gradient(top, #4f5964 0%, #5f6975 40%);
+}
+
+nav ul li {
+    float: left;
+}
+
+nav ul li:hover {
+    background: linear-gradient(top, #bbeeff 0%, #0055bb 40%);
+}
+
+nav ul li:hover a {
+    color: #fff;
+}
+
+nav ul li a {
+    display: block;
+    padding: 25px 40px;
+    color: #fff;
+    text-decoration: none;
+}
+
+nav ul ul {
+    background: #5f6975;
+    border-radius: 0px;
+    padding: 0;
+    position: absolute;
+    top: 100%;
+}
+
+nav ul ul li {
+    float: none;
+    border-top: 1px solid #6b727c;
+    border-bottom: 1px solid #575f6a;
+    position: relative;
+}
+
+nav ul ul li a {
+    padding: 15px 40px;
+    color: #000;
+}
+
+nav ul ul li a:hover {
+    background: #4b545f;
+}
+
+nav ul ul ul {
+    position: absolute;
+    left: 100%;
+    top: 0;
+}
