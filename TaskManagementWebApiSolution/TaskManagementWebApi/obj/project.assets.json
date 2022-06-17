@@ -3078,11 +3078,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\cartec\\Desktop\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj",
+      "projectUniqueName": "c:\\Users\\cartec\\Documents\\Simple-Task-Management\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj",
       "projectName": "TaskManagementWebApi",
-      "projectPath": "c:\\Users\\cartec\\Desktop\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj",
+      "projectPath": "c:\\Users\\cartec\\Documents\\Simple-Task-Management\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj",
       "packagesPath": "C:\\Users\\cartec\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\cartec\\Desktop\\TaskManagementWebApiSolution\\TaskManagementWebApi\\obj\\",
+      "outputPath": "c:\\Users\\cartec\\Documents\\Simple-Task-Management\\TaskManagementWebApiSolution\\TaskManagementWebApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -3143,7 +3143,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }
