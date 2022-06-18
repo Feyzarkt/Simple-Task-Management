@@ -182,7 +182,7 @@ namespace TaskManagementWebApi.Controllers
             {
                 myConnection.Open();
                 sqlCmd.ExecuteNonQuery();
-                Console.WriteLine("Records Inserted Successfully");
+                Console.WriteLine("Records Deleted Successfully");
             }
             catch (SqlException e)
             {
@@ -207,7 +207,7 @@ namespace TaskManagementWebApi.Controllers
             {
                 myConnection.Open();
                 sqlCmd.ExecuteNonQuery();
-                Console.WriteLine("Records Inserted Successfully");
+                Console.WriteLine("Records Deleted Successfully");
             }
             catch (SqlException e)
             {
@@ -219,5 +219,61 @@ namespace TaskManagementWebApi.Controllers
             }
         }
 
+        [HttpPut("update-card/{card}")]
+        [ActionName("UpdateCard")]
+        public async void UpdateCard(Card card)
+        {
+            sqlCmd.CommandText = "UPDATE [CONTENT MANAGEMENT].[CARD] SET Title = @Title, Description = @Description, Deadline = @Deadline WHERE CardId = @CardId";
+            sqlCmd.Connection = myConnection;
+            
+            sqlCmd.Parameters.Add(new SqlParameter("@Title", card.Title));
+            sqlCmd.Parameters.Add(new SqlParameter("@Description", card.Description));
+            sqlCmd.Parameters.Add(new SqlParameter("@Deadline", card.Deadline));
+            sqlCmd.Parameters.Add(new SqlParameter("@CardId", card.CardId));
+
+            try
+            {
+                myConnection.Open();
+                sqlCmd.ExecuteNonQuery();
+                Console.WriteLine("Records Updated Successfully");
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine("Error Generated. Details: " + e.ToString());
+            }
+            finally
+            {
+                myConnection.Close();
+            }
+        }
+
+        [HttpGet("search-card/{title}")]
+        [ActionName("SearchCard")]
+        public async Task<ActionResult<IEnumerable<Card>>> SearchCardWithTitle(String title)
+        {
+            sqlCmd.CommandText = "SELECT * FROM [CONTENT MANAGEMENT].[CARD]";
+            sqlCmd.Connection = myConnection;
+            myConnection.Open();
+            reader = sqlCmd.ExecuteReader();
+
+            List<Card> cardList = new List<Card>();
+            Card card = null;
+            while (reader.Read())
+            {
+                if(title == (String)reader.GetValue(1)){
+                    card = new Card();
+                    card.CardId = (Guid)reader.GetValue(0);
+                    card.Title = (String)reader.GetValue(1);
+                    card.Description = (String)reader.GetValue(2);
+                    card.BoardId = (Guid)reader.GetValue(3);
+                    card.Deadline = (DateTime)reader.GetValue(4);
+                    card.CreatedAt = (DateTime)reader.GetValue(5);
+                    cardList.Add(card);
+                }
+            }
+            return cardList;
+
+            myConnection.Close();
+        }
     }
 }
