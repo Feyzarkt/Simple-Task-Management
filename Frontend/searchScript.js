@@ -11,6 +11,7 @@ var deletebutton;
 $(document).ready(function () {
     /*VERİLERİ GETİRME */
     getCardsFromTitle();
+    getCardsFromDate();
 }); 
 
 function getCardsFromTitle(){
@@ -61,7 +62,7 @@ function getCardsFromTitle(){
     function getCardsFromDate(){
         console.log("document is ready!");
          //on click for <a> element
-         $.getJSON( "http://localhost:5288/TaskManagement/search-card/Deneme", function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
+         $.getJSON( "http://localhost:5288/TaskManagement/search-cards/2022-06-21/2023-02-02", function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
              $.each( data, function(key, value) {
                      console.log("veriler geliyormu");
                      console.log(data[key]);
