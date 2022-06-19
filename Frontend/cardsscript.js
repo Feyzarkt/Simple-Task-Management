@@ -1,5 +1,4 @@
 
-
 var element = document.getElementById("cardsid");
 
 var carddiv;

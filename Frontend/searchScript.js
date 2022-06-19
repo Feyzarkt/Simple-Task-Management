@@ -1,4 +1,5 @@
 
+
 var element = document.getElementById("cardsid");
 
 var carddiv;
@@ -16,7 +17,7 @@ $(document).ready(function () {
 
    console.log("document is ready!");
     //on click for <a> element
-    $.getJSON( "http://localhost:5288/TaskManagement/get-boards-with-user-id/b418ea3f-4835-4a87-be14-1c99dc3b291e", function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
+    $.getJSON( "http://localhost:5288/TaskManagement/search-card/Deneme", function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
         $.each( data, function(key, value) {
                 console.log("veriler geliyormu");
                 console.log(data[key]);
@@ -34,7 +35,7 @@ $(document).ready(function () {
             
             seebutton = document.createElement("button");
             seebutton.className = "button buttonim";
-            seenode = document.createTextNode("See Board");
+            seenode = document.createTextNode("See Card");
             seebutton.appendChild(seenode);
 
             console.log("veriler geldi mi:");
@@ -59,13 +60,3 @@ $(document).ready(function () {
    
 }); 
 
-
-
-/* $.getJSON( "http://localhost:5288/TaskManagement", function( data ) {
-        var items = [];
-        $.each( data, function() {
-    
-            console.log(data.name);
-        });
-       
-      });*/
