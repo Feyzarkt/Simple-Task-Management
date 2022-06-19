@@ -12,13 +12,11 @@ var deletenode;
 var updatebutton;
 var updatenode;
 $(document).ready(function () {
-
-
-/*VERİLERİ GETİRME */
-getCards();
-
-
+    /*VERİLERİ GETİRME */
+    getCards();
 }); 
+
+
 function getCards(){
     console.log("document is ready!");
      //on click for <a> element

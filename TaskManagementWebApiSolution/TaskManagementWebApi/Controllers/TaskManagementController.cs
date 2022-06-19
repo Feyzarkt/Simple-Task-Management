@@ -275,5 +275,41 @@ namespace TaskManagementWebApi.Controllers
 
             myConnection.Close();
         }
+
+        [HttpGet("search-cards/{deadlineBegin}/{deadlineEnd}")]
+        [ActionName("SearchCards")]
+        public async Task<ActionResult<IEnumerable<Card>>> SearchCardWithDate(String deadlineBegin, String deadlineEnd) 
+        {
+            DateTime beginDateT = Convert.ToDateTime(deadlineBegin);
+            DateTime endDateT = Convert.ToDateTime(deadlineEnd);
+
+            sqlCmd.CommandText = "SELECT * FROM [CONTENT MANAGEMENT].[CARD]";// +
+             //   "WHERE " + beginDateT + " <= Deadline";
+            //    "WHERE " + beginDateT + " <= Deadline AND " + endDateT + " >= Deadline";
+              sqlCmd.Connection = myConnection;
+              myConnection.Open();
+              reader = sqlCmd.ExecuteReader();
+
+
+            List <Card> cardList = new List<Card>();
+            Card card = null;
+            while (reader.Read())
+            {
+                if (beginDateT <= (DateTime)reader.GetValue(4)  && endDateT >= (DateTime)reader.GetValue(4))
+               {
+                    card = new Card();
+                    card.CardId = (Guid)reader.GetValue(0);
+                    card.Title = (String)reader.GetValue(1);
+                    card.Description = (String)reader.GetValue(2);
+                    card.BoardId = (Guid)reader.GetValue(3);
+                    card.Deadline = (DateTime)reader.GetValue(4);
+                    card.CreatedAt = (DateTime)reader.GetValue(5);
+                    cardList.Add(card);
+                }
+            }
+            return cardList;
+
+         //   myConnection.Close();
+        }
     }
 }
