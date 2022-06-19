@@ -1,4 +1,5 @@
 
+
 var element = document.getElementById("cardsid");
 
 var carddiv;
@@ -12,89 +13,82 @@ var updatebutton;
 var updatenode;
 $(document).ready(function () {
 
-    $.ajax({
-        url: '/script.cgi',
-        type: 'DELETE',
-        success: function(result) {
-            // Do something with the result
-        }
-    });
 
-  
 /*VERİLERİ GETİRME */
-   console.log("document is ready!");
-    //on click for <a> element
-    $.getJSON( "http://localhost:5288/TaskManagement/get-cards-with-board-id/4a79f69b-5982-402c-bc12-6efd87fd99a4", function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
-        $.each( data, function(key, value) {
-                console.log("veriler geliyormu");
-                console.log(data[key]);
-            carddiv = document.createElement("div");
-            carddiv.className = "card";
-            
-            cardbody = document.createElement("div");
-            cardbody.className = "card-body";
-            
-            cardtitle = document.createElement("div");
-            cardtitle.className = "card-title";
-            
-            carddesc = document.createElement("div");
-            carddesc.className = "card-desc";
-            
-            deletebutton = document.createElement("button");
-            deletebutton.className = "button buttonim";
-            deletenode = document.createTextNode("Delete");
-            deletebutton.appendChild(deletenode);
-            
-            updatebutton = document.createElement("button");
-            updatebutton.className = "button buttonim";
-            updatenode = document.createTextNode("Update");
-            updatebutton.appendChild(updatenode);
-            console.log("veriler geldi mi:");
-            console.log(data[key]);
-            
-            if(data[key].title){
-                cardtitlenode = document.createTextNode(data[key].title);
-                cardtitle.appendChild(cardtitlenode);
-            }
-            if(data[key].description){
-                carddescnode = document.createTextNode(data[key].description);
-                carddesc.appendChild(carddescnode);
-            }
-
-            element.appendChild(carddiv);
-            
-            carddiv.appendChild(cardbody);
-            
-            cardbody.appendChild(cardtitle);
-            cardbody.appendChild(carddesc);
-            cardbody.appendChild(deletebutton);
-            cardbody.appendChild(updatebutton);
+getCards();
 
 
-        });
-       
-      });
-   
 }); 
+function getCards(){
+    console.log("document is ready!");
+     //on click for <a> element
+     $.getJSON( "http://localhost:5288/TaskManagement/get-cards-with-board-id/4a79f69b-5982-402c-bc12-6efd87fd99a4", function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
+         $.each( data, function(key, value) {
+                 console.log("veriler geliyormu");
+                 console.log(data[key]);
+             carddiv = document.createElement("div");
+             carddiv.className = "card";
+             
+             cardbody = document.createElement("div");
+             cardbody.className = "card-body";
+             
+             cardtitle = document.createElement("div");
+             cardtitle.className = "card-title";
+             
+             carddesc = document.createElement("div");
+             carddesc.className = "card-desc";
+             
+             deletebutton = document.createElement("button");
+             deletebutton.className = "button buttonim";
+             deletenode = document.createTextNode("Delete");
+             deletebutton.appendChild(deletenode);
+             deletebutton.setAttribute('onclick','deleteCard("c7ab2e7f-2f3b-4332-bc4c-937f452f5e9e");');
+             
+             updatebutton = document.createElement("button");
+             updatebutton.className = "button buttonim";
+             updatenode = document.createTextNode("Update");
+             updatebutton.appendChild(updatenode);
+             console.log("veriler geldi mi:");
+             console.log(data[key]);
+             
+             if(data[key].title){
+                 cardtitlenode = document.createTextNode(data[key].title);
+                 cardtitle.appendChild(cardtitlenode);
+             }
+             if(data[key].description){
+                 carddescnode = document.createTextNode(data[key].description);
+                 carddesc.appendChild(carddescnode);
+             }
+ 
+             element.appendChild(carddiv);
+             
+             carddiv.appendChild(cardbody);
+             
+             cardbody.appendChild(cardtitle);
+             cardbody.appendChild(carddesc);
+             cardbody.appendChild(deletebutton);
+             cardbody.appendChild(updatebutton);
+ 
+ 
+         });
+        
+       });
+     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function deleteCard(id){
+    console.log("delete içine girdim");
+    fetch('http://localhost:5288/TaskManagement/delete-card/'+id, {
+        method: "DELETE",
+        headers: {
+            'Content-type': 'application/json'
+        }
+    }).then(res => {
+        if (res.ok) { console.log("HTTP request successful") }
+        else { console.log("HTTP request unsuccessful") }
+        return res
+    })
+     window.location.reload();
+}
 
 
 
