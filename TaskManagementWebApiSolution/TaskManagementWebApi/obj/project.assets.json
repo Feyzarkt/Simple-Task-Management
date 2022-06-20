@@ -3072,19 +3072,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Gold-S\\.nuget\\packages\\": {}
+    "C:\\Users\\Tezcan\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Gold-S\\Desktop\\Project\\Simple-Task-Management\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj",
+      "projectUniqueName": "C:\\Users\\Tezcan\\Desktop\\Simple-Task-Management-S-meyra2-Feyza\\Simple-Task-Management-S-meyra2-Feyza\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj",
       "projectName": "TaskManagementWebApi",
-      "projectPath": "C:\\Users\\Gold-S\\Desktop\\Project\\Simple-Task-Management\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj",
-      "packagesPath": "C:\\Users\\Gold-S\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Gold-S\\Desktop\\Project\\Simple-Task-Management\\TaskManagementWebApiSolution\\TaskManagementWebApi\\obj\\",
+      "projectPath": "C:\\Users\\Tezcan\\Desktop\\Simple-Task-Management-S-meyra2-Feyza\\Simple-Task-Management-S-meyra2-Feyza\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj",
+      "packagesPath": "C:\\Users\\Tezcan\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Tezcan\\Desktop\\Simple-Task-Management-S-meyra2-Feyza\\Simple-Task-Management-S-meyra2-Feyza\\TaskManagementWebApiSolution\\TaskManagementWebApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Gold-S\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Tezcan\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3141,7 +3141,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
       }
     }
   }

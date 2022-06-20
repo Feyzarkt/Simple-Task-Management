@@ -80,13 +80,16 @@ ALTER DATABASE [TaskManagementdb] SET QUERY_STORE = OFF
 GO
 USE [TaskManagementdb]
 GO
-/****** Object:  Schema [COMMON]    Script Date: 30.05.2022 21:42:58 ******/
+
+USE [TaskManagementdb]
+GO
+/****** Object:  Schema [COMMON]    Script Date: 16.06.2022 21:28:35 ******/
 CREATE SCHEMA [COMMON]
 GO
-/****** Object:  Schema [CONTENT MANAGEMENT]    Script Date: 30.05.2022 21:42:58 ******/
+/****** Object:  Schema [CONTENT MANAGEMENT]    Script Date: 16.06.2022 21:28:35 ******/
 CREATE SCHEMA [CONTENT MANAGEMENT]
 GO
-/****** Object:  Table [COMMON].[User]    Script Date: 30.05.2022 21:42:58 ******/
+/****** Object:  Table [COMMON].[User]    Script Date: 16.06.2022 21:28:35 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -102,7 +105,7 @@ CREATE TABLE [COMMON].[User](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [CONTENT MANAGEMENT].[Board]    Script Date: 30.05.2022 21:42:58 ******/
+/****** Object:  Table [CONTENT MANAGEMENT].[Board]    Script Date: 16.06.2022 21:28:35 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -117,7 +120,7 @@ CREATE TABLE [CONTENT MANAGEMENT].[Board](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [CONTENT MANAGEMENT].[Card]    Script Date: 30.05.2022 21:42:58 ******/
+/****** Object:  Table [CONTENT MANAGEMENT].[Card]    Script Date: 16.06.2022 21:28:35 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -135,6 +138,15 @@ CREATE TABLE [CONTENT MANAGEMENT].[Card](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+INSERT [COMMON].[User] ([UserId], [Name], [Email], [Password]) VALUES (N'b418ea3f-4835-4a87-be14-1c99dc3b291e', N'Feyza', N'feyzaurkut1@gmail.com', N'123456')
+GO
+INSERT [CONTENT MANAGEMENT].[Board] ([BoardId], [Name], [OwnerId]) VALUES (N'4a79f69b-5982-402c-bc12-6efd87fd99a4', N'Feyza''s Board', N'b418ea3f-4835-4a87-be14-1c99dc3b291e')
+GO
+INSERT [CONTENT MANAGEMENT].[Card] ([CardId], [Title], [Description], [BoardId], [Deadline], [CreatedAt]) VALUES (N'a32d32d0-1116-4777-aa7b-086ed828930b', N'FeyzaCard1', N'asdfghjk', N'4a79f69b-5982-402c-bc12-6efd87fd99a4', CAST(N'2022-04-01T00:00:00.000' AS DateTime), CAST(N'2022-04-02T00:00:00.000' AS DateTime))
+INSERT [CONTENT MANAGEMENT].[Card] ([CardId], [Title], [Description], [BoardId], [Deadline], [CreatedAt]) VALUES (N'c596a7d6-d704-4282-9d87-227e3caf8ef6', N'Deneme', N'DENEME', N'4a79f69b-5982-402c-bc12-6efd87fd99a4', CAST(N'2022-06-11T10:48:15.287' AS DateTime), CAST(N'2022-06-11T14:02:08.887' AS DateTime))
+INSERT [CONTENT MANAGEMENT].[Card] ([CardId], [Title], [Description], [BoardId], [Deadline], [CreatedAt]) VALUES (N'c7ab2e7f-2f3b-4332-bc4c-937f452f5e9e', N'FeyzaCard2', N'adsfxcvb', N'4a79f69b-5982-402c-bc12-6efd87fd99a4', CAST(N'2022-05-01T00:00:00.000' AS DateTime), CAST(N'2022-05-02T00:00:00.000' AS DateTime))
+INSERT [CONTENT MANAGEMENT].[Card] ([CardId], [Title], [Description], [BoardId], [Deadline], [CreatedAt]) VALUES (N'67143550-cc8f-42e1-94b8-ebdeb70505f6', N'Deneme2', N'DENEME2', N'4a79f69b-5982-402c-bc12-6efd87fd99a4', CAST(N'2022-06-11T10:48:15.287' AS DateTime), CAST(N'2022-06-11T14:08:25.357' AS DateTime))
+GO
 ALTER TABLE [CONTENT MANAGEMENT].[Board]  WITH CHECK ADD  CONSTRAINT [FK_Board_User] FOREIGN KEY([OwnerId])
 REFERENCES [COMMON].[User] ([UserId])
 GO
@@ -144,8 +156,4 @@ ALTER TABLE [CONTENT MANAGEMENT].[Card]  WITH CHECK ADD  CONSTRAINT [FK_Card_Boa
 REFERENCES [CONTENT MANAGEMENT].[Board] ([BoardId])
 GO
 ALTER TABLE [CONTENT MANAGEMENT].[Card] CHECK CONSTRAINT [FK_Card_Board]
-GO
-USE [master]
-GO
-ALTER DATABASE [TaskManagementdb] SET  READ_WRITE 
 GO
