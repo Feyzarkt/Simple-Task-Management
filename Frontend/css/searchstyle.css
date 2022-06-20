@@ -111,88 +111,50 @@ td {
         flex-wrap: wrap;
     }
 }
-
-nav {
-    width: 100%;
+* {
+    box-sizing: border-box;
 }
 
-nav ul ul {
-    display: none;
+body {
+    margin: 0;
 }
 
-nav ul li:hover>ul {
-    display: block;
-}
-
-nav ul {
-    background: linear-gradient(135deg, red, blue);
-    box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.15);
-    padding: 0 20px;
-    border-radius: 10px;
-    list-style: none;
-    position: relative;
-    display: inline-table;
-}
-
-nav ul:after {
-    content: "";
+.clearfix {
     clear: both;
-    display: block;
 }
 
-nav ul li:hover {
-    background: #4b545f;
-    background: linear-gradient(top, #4f5964 0%, #5f6975 40%);
+.container-width {
+    width: 90%;
+    max-width: 1150px;
+    margin: 0 auto;
 }
-
-nav ul li {
-    float: left;
-}
-
-nav ul li:hover {
-    background: linear-gradient(top, #bbeeff 0%, #0055bb 40%);
-}
-
-nav ul li:hover a {
-    color: #fff;
-}
-
-nav ul li a {
-    display: block;
-    padding: 25px 40px;
-    color: #fff;
-    text-decoration: none;
-}
-
-nav ul ul {
-    background: #5f6975;
-    border-radius: 0px;
+ul {
+    list-style-type: none;
+    margin: 0;
     padding: 0;
-    position: absolute;
-    top: 100%;
-}
-
-nav ul ul li {
-    float: none;
-    border-top: 1px solid #6b727c;
-    border-bottom: 1px solid #575f6a;
-    position: relative;
-}
-
-nav ul ul li a {
-    padding: 15px 40px;
-    color: #000;
-}
-
-nav ul ul li a:hover {
-    background: #4b545f;
-}
-
-nav ul ul ul {
-    position: absolute;
-    left: 100%;
-    top: 0;
-}
+    overflow: hidden;
+    background-color: white;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: #555;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  li a:hover {
+    background: #2471FF;
+	border: none;
+	padding: 10px 20px 10px 20px;
+	border-bottom: 3px solid #5994FF;
+	color: #D2E2FF;
+  }
 
 .cards {
     padding: 20px 0;

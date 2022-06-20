@@ -22,6 +22,7 @@ $(document).ready(function () {
         const searchTitle = searchForm.searchTitle.value;
         
         if (searchTitle === "user") {
+        //    location.reload();
             getCardsFromTitle();
         } else {
             alert("There is no card with title " + searchTitle);
@@ -39,6 +40,7 @@ $(document).ready(function () {
         const endDate = searchForm2.endDate.value;
         
         if (beginDate === "2022-02-02") {
+        //    location.reload();
             getCardsFromDate();
         } else {
             alert("There is no card with begin date " + beginDate);
