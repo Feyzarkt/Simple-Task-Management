@@ -11,22 +11,40 @@ var deletebutton;
 $(document).ready(function () {
     /*VERİLERİ GETİRME */
  //   getCardsFromTitle();
-    getCardsFromDate();
+ //   getCardsFromDate();
 
+    //onclick event for search with title
     const searchForm = document.getElementById("i66j");
-        const searchButton = document.getElementById("search-form-submit");
+    const searchButton = document.getElementById("search-form-submit");
 
-        searchButton.addEventListener("click", (e) => {
-            e.preventDefault();
-            const searchTitle = searchForm.searchTitle.value;
-            
-            if (searchTitle === "user") {
-                getCardsFromTitle();
-            } else {
-                alert("There is no card with title " + searchTitle);
-                location.reload();
-            }
-        })
+    searchButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        const searchTitle = searchForm.searchTitle.value;
+        
+        if (searchTitle === "user") {
+            getCardsFromTitle();
+        } else {
+            alert("There is no card with title " + searchTitle);
+            location.reload();
+        }
+    })
+
+    //onclick event for search with date
+    const searchForm2 = document.getElementById("iv32r");
+    const searchButton2 = document.getElementById("ikr5y");
+
+    searchButton2.addEventListener("click", (e) => {
+        e.preventDefault();
+        const beginDate = searchForm2.beginDate.value;
+        const endDate = searchForm2.endDate.value;
+        
+        if (beginDate === "2022-02-02") {
+            getCardsFromDate();
+        } else {
+            alert("There is no card with begin date " + beginDate);
+            location.reload();
+        }
+    })
     
 }); 
 
