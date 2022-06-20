@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "+V0cx2XlBclxLp75NTgQwrYRbVFaDauarcjFqu0Lgd4fTT9L2li9E7mY9fiuFFvP5HSt4j1dSm2d2pOUSQOwiQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Tezcan\\source\\repos\\TaskManagementWebApiSolution\\TaskManagementDataAccess\\TaskManagementDataAccess.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Tezcan\\.nuget\\packages\\fsharp.core\\6.0.4\\fsharp.core.6.0.4.nupkg.sha512"
+  ],
+  "logs": []
+}
