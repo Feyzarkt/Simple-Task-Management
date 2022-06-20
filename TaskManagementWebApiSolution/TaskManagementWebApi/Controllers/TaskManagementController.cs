@@ -168,6 +168,34 @@ namespace TaskManagementWebApi.Controllers
             }
         }
 
+        [HttpPost("create-board/{boardName}/{ownerId}")]
+        [ActionName("CreateBoardWithUserId")]
+        public async void CreateBoardWithUserId(String boardName, Guid ownerId)
+        {
+            sqlCmd.CommandText = "INSERT INTO [CONTENT MANAGEMENT].[BOARD] VALUES(@BoardId, @Name, @OwnerId)";
+            sqlCmd.Connection = myConnection;
+
+            sqlCmd.Parameters.Add(new SqlParameter("@BoardId", Guid.NewGuid()));
+            sqlCmd.Parameters.Add(new SqlParameter("@Name", boardName));
+            sqlCmd.Parameters.Add(new SqlParameter("@OwnerId", ownerId));
+
+
+            try
+            {
+                myConnection.Open();
+                sqlCmd.ExecuteNonQuery();
+                Console.WriteLine("Records Inserted Successfully");
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine("Error Generated. Details: " + e.ToString());
+            }
+            finally
+            {
+                myConnection.Close();
+            }
+        }
+
 
         [HttpDelete("delete-board/{board}")]
         [ActionName("DeleteBoard")]
