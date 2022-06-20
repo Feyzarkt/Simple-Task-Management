@@ -11,12 +11,22 @@ var deletebutton;
 var deletenode;
 var updatebutton;
 var updatenode;
+var seebutton;
 $(document).ready(function () {
 
 
 
    console.log("document is ready!");
    getBoards();
+
+//    const seeButton2 = document.getElementById("seebuttonid");
+//    seeButton2.addEventListener("click", (e) => {
+//        e.preventDefault();
+  
+   
+//        seeBoard();
+//    })
+
 
   // createBoard();
  
@@ -43,68 +53,94 @@ createButton.addEventListener("click", (e) => {
     e.preventDefault();
     const boardTitle = createForm.name.value;
     
-    var userId = "b418ea3f-4835-4a87-be14-1c99dc3b291f";
+    var userId = "b418ea3f-4835-4a87-be14-1c99dc3b291e";
     var boardName = "boarddd";
 
     boardName  = document.getElementById("createboardinput").value;
 
 
+     createBoard(boardName, userId);
 
-
-
-   // if (boardTitle === "") {
-    //    location.reload();
-        createBoard(boardName, userId);
-    // } else {
-    //     alert("Please enter a board name " + boardTitle);
-    //     location.reload();
-    // }
 })
-
-
 function getBoards(){
-       //on click for <a> element
-       $.getJSON( "http://localhost:5288/TaskManagement/get-boards-with-user-id/b418ea3f-4835-4a87-be14-1c99dc3b291f", function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
-       $.each( data, function(key, value) {
-               console.log("veriler geliyormu");
-               console.log(data[key]);
-           carddiv = document.createElement("div");
-           carddiv.className = "card";
-           
-           cardbody = document.createElement("div");
-           cardbody.className = "card-body";
-           
-           cardtitle = document.createElement("div");
-           cardtitle.className = "card-title";
-           
-           carddesc = document.createElement("div");
-           carddesc.className = "card-desc";
-           
-           seebutton = document.createElement("button");
-           seebutton.className = "button buttonim";
-           seenode = document.createTextNode("See Board");
-           seebutton.appendChild(seenode);
+    //on click for <a> element
+    $.getJSON( "http://localhost:5288/TaskManagement/get-boards-with-user-id/b418ea3f-4835-4a87-be14-1c99dc3b291e", function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
+    $.each( data, function(key, value) {
+    console.log("veriler geliyormu");
+    console.log(data[key]);
+    carddiv = document.createElement("div");
+    carddiv.className = "card";
+    
+     cardbody = document.createElement("div");
+    cardbody.className = "card-body";
+    cardtitle = document.createElement("div");
+    cardtitle.className = "card-title";
+    carddesc = document.createElement("div");
+    carddesc.className = "card-desc";
+    seebutton = document.createElement("button");
+    seebutton.className = "button buttonim";
+    seebutton.id = data[key].boardId;
+    seenode = document.createTextNode("See Board");
+    seebutton.appendChild(seenode);
+    seebutton.setAttribute('onclick','seeBoard(this.id);');
+    console.log(data[key].boardId);
+     var guid=  '<%=Request.QueryString[data[key].boardId]%>';
 
-           console.log("veriler geldi mi:");
-           console.log(data[key]);
-           
-           if(data[key].name){
-               cardtitlenode = document.createTextNode(data[key].name);
-               cardtitle.appendChild(cardtitlenode);
-           }
-           element.appendChild(carddiv);
-           
-           carddiv.appendChild(cardbody);
-           
-           cardbody.appendChild(cardtitle);
-           cardbody.appendChild(carddesc);
-           cardbody.appendChild(seebutton);
+     console.log("meslea");
+     console.log(data[key].boardId);
+        //seebutton.setAttribute('data-sku', data[key].boardId); // Feyza
+        
+    
+     console.log("veriler geldi mi:");
+    console.log(data[key]);
+    if(data[key].name){
+    cardtitlenode = document.createTextNode(data[key].name);
+    cardtitle.appendChild(cardtitlenode);
+    }
+    element.appendChild(carddiv);
+    carddiv.appendChild(cardbody);
+    cardbody.appendChild(cardtitle);
+    cardbody.appendChild(carddesc);
+    cardbody.appendChild(seebutton);
+    
+    });
+    });
+    }
 
 
-       });
-      
-     });
-}
+
+    function getBoardsForCards(){
+        //on click for <a> element
+        $.getJSON( "http://localhost:5288/TaskManagement/get-boards-with-user-id/b418ea3f-4835-4a87-be14-1c99dc3b291e", function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
+        $.each( data, function(key, value) {
+        console.log("veriler geliyormu");
+        
+        
+        seebutton.setAttribute('data-sku', data[key].boardId); // Feyza
+           
+               
+        
+         console.log("veriler geldi mi:");
+        console.log(data[key]);
+        if(data[key].name){
+        cardtitlenode = document.createTextNode(data[key].name);
+        cardtitle.appendChild(cardtitlenode);
+        }
+       
+        });
+        });
+        }
+    
+    
+
+//Feyza-bunu seeboard butonunun on click ine vericez board id yi storage a atıyor olucaz cards sayfasında çekicez
+function seeBoard(id){
+    var boardId = id;
+    console.log("see boadr");
+    console.log(boardId);
+    sessionStorage.setItem("boardId", boardId);
+ window.location.href="cards.html";
+    }
 
 
 function createBoard(boardName, userId){  //burda board ları gösterme değil de create etme yapcaz. parametre olarak boardname ve ownerıd al, local storage
@@ -124,14 +160,3 @@ function createBoard(boardName, userId){  //burda board ları gösterme değil d
    
     
 }
-
-
-
-/* $.getJSON( "http://localhost:5288/TaskManagement", function( data ) {
-        var items = [];
-        $.each( data, function() {
-    
-            console.log(data.name);
-        });
-       
-      });*/

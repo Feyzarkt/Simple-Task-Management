@@ -129,17 +129,49 @@ namespace TaskManagementWebApi.Controllers
                 myConnection.Close();
             }
         }
+        [HttpPost("create-card-without-id/{cardTitle}/{description}/{deadline}/{boardId}")]
+        [ActionName("CreateCard")]
+        public async void CreateCardWithoutId(String cardTitle, String description, String deadline, String boardId)
+        {
+            DateTime deadlineTime = Convert.ToDateTime(deadline);
 
-        
+            sqlCmd.CommandText = "INSERT INTO [CONTENT MANAGEMENT].[CARD] VALUES(@CardId, @Title, @Description, @BoardId, @Deadline, @CreatedAt)";
+            sqlCmd.Connection = myConnection;
 
-/*{
-  "cardId": null,
-  "title": "Deneme",
-  "description": "DENEME",
-  "boardId": "4a79f69b-5982-402c-bc12-6efd87fd99a4",
-  "deadline": "2022-06-11T10:48:15.287Z",
-  "createdAt": null
-}*/
+            sqlCmd.Parameters.Add(new SqlParameter("@CardId", Guid.NewGuid()));
+            sqlCmd.Parameters.Add(new SqlParameter("@Title", cardTitle));
+            sqlCmd.Parameters.Add(new SqlParameter("@Description", description));
+            sqlCmd.Parameters.Add(new SqlParameter("@BoardId", boardId));
+            sqlCmd.Parameters.Add(new SqlParameter("@Deadline", deadlineTime));
+            sqlCmd.Parameters.Add(new SqlParameter("@CreatedAt", DateTime.Now));
+
+
+            try
+            {
+                myConnection.Open();
+                sqlCmd.ExecuteNonQuery();
+                Console.WriteLine("Records Inserted Successfully");
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine("Error Generated. Details: " + e.ToString());
+            }
+            finally
+            {
+                myConnection.Close();
+            }
+        }
+
+
+
+        /*{
+          "cardId": null,
+          "title": "Deneme",
+          "description": "DENEME",
+          "boardId": "4a79f69b-5982-402c-bc12-6efd87fd99a4",
+          "deadline": "2022-06-11T10:48:15.287Z",
+          "createdAt": null
+        }*/
         [HttpPost("create-board/{board}")]
         [ActionName("CreateBoard")]
         public async void CreateBoard(Board board)
@@ -274,7 +306,35 @@ namespace TaskManagementWebApi.Controllers
                 myConnection.Close();
             }
         }
+        [HttpPut("update-card-with-parameters/{cardTitle}/{description}/{deadline}/{cardId}")]
+        [ActionName("UpdateCard")]
+        public async void UpdateCardWithParameters(String cardTitle, String description, String deadline, String cardId )
+        {
+            DateTime deadlineTime = Convert.ToDateTime(deadline);
 
+            sqlCmd.CommandText = "UPDATE [CONTENT MANAGEMENT].[CARD] SET Title = @Title, Description = @Description, Deadline = @Deadline WHERE CardId = @CardId";
+            sqlCmd.Connection = myConnection;
+
+            sqlCmd.Parameters.Add(new SqlParameter("@Title", cardTitle));
+            sqlCmd.Parameters.Add(new SqlParameter("@Description", description));
+            sqlCmd.Parameters.Add(new SqlParameter("@Deadline", deadlineTime));
+            sqlCmd.Parameters.Add(new SqlParameter("@CardId", cardId));
+
+            try
+            {
+                myConnection.Open();
+                sqlCmd.ExecuteNonQuery();
+                Console.WriteLine("Records Updated Successfully");
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine("Error Generated. Details: " + e.ToString());
+            }
+            finally
+            {
+                myConnection.Close();
+            }
+        }
         [HttpGet("search-card/{title}")]
         [ActionName("SearchCard")]
         public async Task<ActionResult<IEnumerable<Card>>> SearchCardWithTitle(String title)

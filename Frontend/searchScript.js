@@ -19,15 +19,10 @@ $(document).ready(function () {
 
     searchButton.addEventListener("click", (e) => {
         e.preventDefault();
-        const searchTitle = searchForm.searchTitle.value;
-        
-        if (searchTitle === "user") {
-        //    location.reload();
-            getCardsFromTitle();
-        } else {
-            alert("There is no card with title " + searchTitle);
-            location.reload();
-        }
+       var cardname = document.getElementById("searchcardbyname").value;
+       
+        getCardsFromTitle(cardname);
+               
     })
 
     //onclick event for search with date
@@ -38,22 +33,17 @@ $(document).ready(function () {
         e.preventDefault();
         const beginDate = searchForm2.beginDate.value;
         const endDate = searchForm2.endDate.value;
-        
-        if (beginDate === "2022-02-02") {
-        //    location.reload();
-            getCardsFromDate();
-        } else {
-            alert("There is no card with begin date " + beginDate);
-            location.reload();
-        }
+        getCardsFromDate(beginDate, endDate);
+       
     })
     
 }); 
 
-function getCardsFromTitle(){
+function getCardsFromTitle(cardname){
    console.log("document is ready!");
+   element.innerHTML = "";
     //on click for <a> element
-    $.getJSON( "http://localhost:5288/TaskManagement/search-card/Deneme", function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
+    $.getJSON( "http://localhost:5288/TaskManagement/search-card/"+cardname, function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
         $.each( data, function(key, value) {
                 console.log("veriler geliyormu");
                 console.log(data[key]);
@@ -77,9 +67,14 @@ function getCardsFromTitle(){
             console.log("veriler geldi mi:");
             console.log(data[key]);
             
-            if(data[key].name){
-                cardtitlenode = document.createTextNode(data[key].name);
+            if(data[key].title){
+                cardtitlenode = document.createTextNode(data[key].title);
                 cardtitle.appendChild(cardtitlenode);
+            }
+
+            if(data[key].description){
+                carddescnode = document.createTextNode(data[key].description);
+                carddesc.appendChild(carddescnode);
             }
             element.appendChild(carddiv);
             
@@ -95,10 +90,10 @@ function getCardsFromTitle(){
       });
     }
 
-function getCardsFromDate(){
+function getCardsFromDate(beginDate, endDate){
 console.log("document is ready!");
     //on click for <a> element
-    $.getJSON( "http://localhost:5288/TaskManagement/search-cards/2022-06-21/2023-02-02", function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
+    $.getJSON( "http://localhost:5288/TaskManagement/search-cards/"+beginDate+"/"+endDate, function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
         $.each( data, function(key, value) {
                 console.log("veriler geliyormu");
                 console.log(data[key]);
@@ -122,9 +117,14 @@ console.log("document is ready!");
             console.log("veriler geldi mi:");
             console.log(data[key]);
             
-            if(data[key].name){
-                cardtitlenode = document.createTextNode(data[key].name);
+            if(data[key].title){
+                cardtitlenode = document.createTextNode(data[key].title);
                 cardtitle.appendChild(cardtitlenode);
+            }
+
+            if(data[key].description){
+                carddescnode = document.createTextNode(data[key].description);
+                carddesc.appendChild(carddescnode);
             }
             element.appendChild(carddiv);
             

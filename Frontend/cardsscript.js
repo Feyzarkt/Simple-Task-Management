@@ -20,7 +20,11 @@ $(document).ready(function () {
 function getCards(){
     console.log("document is ready!");
      //on click for <a> element
-     $.getJSON( "http://localhost:5288/TaskManagement/get-cards-with-board-id/4a79f69b-5982-402c-bc12-6efd87fd99a4", function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
+     const boardId= sessionStorage.getItem("boardId"); 
+
+     console.log("getcards00");
+     console.log(boardId);
+     $.getJSON( "http://localhost:5288/TaskManagement/get-cards-with-board-id/"+boardId, function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
          $.each( data, function(key, value) {
                  console.log("veriler geliyormu");
                  console.log(data[key]);
