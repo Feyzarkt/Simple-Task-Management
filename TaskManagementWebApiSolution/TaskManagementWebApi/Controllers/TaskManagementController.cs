@@ -168,6 +168,34 @@ namespace TaskManagementWebApi.Controllers
             }
         }
 
+        [HttpPost("create-board/{boardName}/{ownerId}")]
+        [ActionName("CreateBoardWithUserId")]
+        public async void CreateBoardWithUserId(String boardName, Guid ownerId)
+        {
+            sqlCmd.CommandText = "INSERT INTO [CONTENT MANAGEMENT].[BOARD] VALUES(@BoardId, @Name, @OwnerId)";
+            sqlCmd.Connection = myConnection;
+
+            sqlCmd.Parameters.Add(new SqlParameter("@BoardId", Guid.NewGuid()));
+            sqlCmd.Parameters.Add(new SqlParameter("@Name", boardName));
+            sqlCmd.Parameters.Add(new SqlParameter("@OwnerId", ownerId));
+
+
+            try
+            {
+                myConnection.Open();
+                sqlCmd.ExecuteNonQuery();
+                Console.WriteLine("Records Inserted Successfully");
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine("Error Generated. Details: " + e.ToString());
+            }
+            finally
+            {
+                myConnection.Close();
+            }
+        }
+
 
         [HttpDelete("delete-board/{board}")]
         [ActionName("DeleteBoard")]
@@ -274,6 +302,42 @@ namespace TaskManagementWebApi.Controllers
             return cardList;
 
             myConnection.Close();
+        }
+
+        [HttpGet("search-cards/{deadlineBegin}/{deadlineEnd}")]
+        [ActionName("SearchCards")]
+        public async Task<ActionResult<IEnumerable<Card>>> SearchCardWithDate(String deadlineBegin, String deadlineEnd) 
+        {
+            DateTime beginDateT = Convert.ToDateTime(deadlineBegin);
+            DateTime endDateT = Convert.ToDateTime(deadlineEnd);
+
+            sqlCmd.CommandText = "SELECT * FROM [CONTENT MANAGEMENT].[CARD]";// +
+             //   "WHERE " + beginDateT + " <= Deadline";
+            //    "WHERE " + beginDateT + " <= Deadline AND " + endDateT + " >= Deadline";
+              sqlCmd.Connection = myConnection;
+              myConnection.Open();
+              reader = sqlCmd.ExecuteReader();
+
+
+            List <Card> cardList = new List<Card>();
+            Card card = null;
+            while (reader.Read())
+            {
+                if (beginDateT <= (DateTime)reader.GetValue(4)  && endDateT >= (DateTime)reader.GetValue(4))
+               {
+                    card = new Card();
+                    card.CardId = (Guid)reader.GetValue(0);
+                    card.Title = (String)reader.GetValue(1);
+                    card.Description = (String)reader.GetValue(2);
+                    card.BoardId = (Guid)reader.GetValue(3);
+                    card.Deadline = (DateTime)reader.GetValue(4);
+                    card.CreatedAt = (DateTime)reader.GetValue(5);
+                    cardList.Add(card);
+                }
+            }
+            return cardList;
+
+         //   myConnection.Close();
         }
     }
 }
