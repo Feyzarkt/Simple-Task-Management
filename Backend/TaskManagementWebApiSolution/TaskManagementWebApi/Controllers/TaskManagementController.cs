@@ -125,36 +125,74 @@ namespace TaskManagementWebApi.Controllers
             myConnection.Close();
         }
 
-        [HttpPost("create-card/{card}")]
-        [ActionName("CreateCard")]
-        public async void CreateCard(Card card)
+        [HttpGet("search-card/{title}/{userId}")]
+        [ActionName("SearchCard")]
+        public async Task<ActionResult<IEnumerable<Card>>> SearchCardWithTitle(String title, String userId)
         {
-            sqlCmd.CommandText = "INSERT INTO [CONTENT MANAGEMENT].[CARD] VALUES(@CardId, @Title, @Description, @BoardId, @Deadline, @CreatedAt)";
+            sqlCmd.CommandText = "SELECT CardId, Title, Description, a.BoardId, Deadline, CreatedAt FROM [CONTENT MANAGEMENT].[CARD] as a INNER JOIN [CONTENT MANAGEMENT].[BOARD] as b ON a.BoardId = b.BoardId WHERE Title = @Title AND b.OwnerId = @UserId";
             sqlCmd.Connection = myConnection;
-            
-            sqlCmd.Parameters.Add(new SqlParameter("@CardId", Guid.NewGuid()));
-            sqlCmd.Parameters.Add(new SqlParameter("@Title", card.Title));
-            sqlCmd.Parameters.Add(new SqlParameter("@Description", card.Description));
-            sqlCmd.Parameters.Add(new SqlParameter("@BoardId", card.BoardId));
-            sqlCmd.Parameters.Add(new SqlParameter("@Deadline", card.Deadline));
-            sqlCmd.Parameters.Add(new SqlParameter("@CreatedAt", DateTime.Now));
+            sqlCmd.Parameters.Add(new SqlParameter("@Title", title));
+            sqlCmd.Parameters.Add(new SqlParameter("@UserId", userId));
+            myConnection.Open();
+            reader = sqlCmd.ExecuteReader();
 
+            List<Card> cardList = new List<Card>();
+            Card card = null;
+            while (reader.Read())
+            {
+                if(title == (String)reader.GetValue(1)){
+                    card = new Card();
+                    card.CardId = (Guid)reader.GetValue(0);
+                    card.Title = (String)reader.GetValue(1);
+                    card.Description = (String)reader.GetValue(2);
+                    card.BoardId = (Guid)reader.GetValue(3);
+                    card.Deadline = (DateTime)reader.GetValue(4);
+                    card.CreatedAt = (DateTime)reader.GetValue(5);
+                    cardList.Add(card);
+                }
+            }
+            return cardList;
 
-            try
-            {
-                myConnection.Open();
-                sqlCmd.ExecuteNonQuery();
-                Console.WriteLine("Records Inserted Successfully");
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine("Error Generated. Details: " + e.ToString());
-            }
-            finally
-            {
-                myConnection.Close();
-            }
+            myConnection.Close();
         }
+
+        [HttpGet("search-cards/{deadlineBegin}/{deadlineEnd}/{userId}")]
+        [ActionName("SearchCards")]
+        public async Task<ActionResult<IEnumerable<Card>>> SearchCardWithDate(String deadlineBegin, String deadlineEnd, String userId) 
+        {
+            DateTime beginDateT = Convert.ToDateTime(deadlineBegin);
+            DateTime endDateT = Convert.ToDateTime(deadlineEnd);
+
+            sqlCmd.CommandText = "SELECT CardId, Title, Description, a.BoardId, Deadline, CreatedAt FROM [CONTENT MANAGEMENT].[CARD] as a INNER JOIN [CONTENT MANAGEMENT].[BOARD] as b ON a.BoardId = b.BoardId WHERE b.OwnerId = @UserId";
+             //   "WHERE " + beginDateT + " <= Deadline";
+            //    "WHERE " + beginDateT + " <= Deadline AND " + endDateT + " >= Deadline";
+              sqlCmd.Connection = myConnection;
+              sqlCmd.Parameters.Add(new SqlParameter("@UserId", userId));
+              myConnection.Open();
+              reader = sqlCmd.ExecuteReader();
+
+
+            List <Card> cardList = new List<Card>();
+            Card card = null;
+            while (reader.Read())
+            {
+                if (beginDateT <= (DateTime)reader.GetValue(4)  && endDateT >= (DateTime)reader.GetValue(4))
+               {
+                    card = new Card();
+                    card.CardId = (Guid)reader.GetValue(0);
+                    card.Title = (String)reader.GetValue(1);
+                    card.Description = (String)reader.GetValue(2);
+                    card.BoardId = (Guid)reader.GetValue(3);
+                    card.Deadline = (DateTime)reader.GetValue(4);
+                    card.CreatedAt = (DateTime)reader.GetValue(5);
+                    cardList.Add(card);
+                }
+            }
+            return cardList;
+
+         //   myConnection.Close();
+        }
+
         [HttpPost("create-card-without-id/{cardTitle}/{description}/{deadline}/{boardId}")]
         [ActionName("CreateCard")]
         public async void CreateCardWithoutId(String cardTitle, String description, String deadline, String boardId)
@@ -170,44 +208,6 @@ namespace TaskManagementWebApi.Controllers
             sqlCmd.Parameters.Add(new SqlParameter("@BoardId", boardId));
             sqlCmd.Parameters.Add(new SqlParameter("@Deadline", deadlineTime));
             sqlCmd.Parameters.Add(new SqlParameter("@CreatedAt", DateTime.Now));
-
-
-            try
-            {
-                myConnection.Open();
-                sqlCmd.ExecuteNonQuery();
-                Console.WriteLine("Records Inserted Successfully");
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine("Error Generated. Details: " + e.ToString());
-            }
-            finally
-            {
-                myConnection.Close();
-            }
-        }
-
-
-
-        /*{
-          "cardId": null,
-          "title": "Deneme",
-          "description": "DENEME",
-          "boardId": "4a79f69b-5982-402c-bc12-6efd87fd99a4",
-          "deadline": "2022-06-11T10:48:15.287Z",
-          "createdAt": null
-        }*/
-        [HttpPost("create-board/{board}")]
-        [ActionName("CreateBoard")]
-        public async void CreateBoard(Board board)
-        {
-            sqlCmd.CommandText = "INSERT INTO [CONTENT MANAGEMENT].[BOARD] VALUES(@BoardId, @Name, @OwnerId)";
-            sqlCmd.Connection = myConnection;
-            
-            sqlCmd.Parameters.Add(new SqlParameter("@BoardId", Guid.NewGuid()));
-            sqlCmd.Parameters.Add(new SqlParameter("@Name", board.Name));
-            sqlCmd.Parameters.Add(new SqlParameter("@OwnerId", board.OwnerId));
 
 
             try
@@ -254,6 +254,35 @@ namespace TaskManagementWebApi.Controllers
             }
         }
 
+        [HttpPut("update-card-with-parameters/{cardTitle}/{description}/{deadline}/{cardId}")]
+        [ActionName("UpdateCard")]
+        public async void UpdateCardWithParameters(String cardTitle, String description, String deadline, String cardId )
+        {
+            DateTime deadlineTime = Convert.ToDateTime(deadline);
+
+            sqlCmd.CommandText = "UPDATE [CONTENT MANAGEMENT].[CARD] SET Title = @Title, Description = @Description, Deadline = @Deadline WHERE CardId = @CardId";
+            sqlCmd.Connection = myConnection;
+
+            sqlCmd.Parameters.Add(new SqlParameter("@Title", cardTitle));
+            sqlCmd.Parameters.Add(new SqlParameter("@Description", description));
+            sqlCmd.Parameters.Add(new SqlParameter("@Deadline", deadlineTime));
+            sqlCmd.Parameters.Add(new SqlParameter("@CardId", cardId));
+
+            try
+            {
+                myConnection.Open();
+                sqlCmd.ExecuteNonQuery();
+                Console.WriteLine("Records Updated Successfully");
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine("Error Generated. Details: " + e.ToString());
+            }
+            finally
+            {
+                myConnection.Close();
+            }
+        }
 
         [HttpDelete("delete-board/{boardId}")]
         [ActionName("DeleteBoard")]
@@ -330,128 +359,7 @@ namespace TaskManagementWebApi.Controllers
             }
         }
 
-        [HttpPut("update-card/{card}")]
-        [ActionName("UpdateCard")]
-        public async void UpdateCard(Card card)
-        {
-            sqlCmd.CommandText = "UPDATE [CONTENT MANAGEMENT].[CARD] SET Title = @Title, Description = @Description, Deadline = @Deadline WHERE CardId = @CardId";
-            sqlCmd.Connection = myConnection;
-            
-            sqlCmd.Parameters.Add(new SqlParameter("@Title", card.Title));
-            sqlCmd.Parameters.Add(new SqlParameter("@Description", card.Description));
-            sqlCmd.Parameters.Add(new SqlParameter("@Deadline", card.Deadline));
-            sqlCmd.Parameters.Add(new SqlParameter("@CardId", card.CardId));
-
-            try
-            {
-                myConnection.Open();
-                sqlCmd.ExecuteNonQuery();
-                Console.WriteLine("Records Updated Successfully");
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine("Error Generated. Details: " + e.ToString());
-            }
-            finally
-            {
-                myConnection.Close();
-            }
-        }
-        [HttpPut("update-card-with-parameters/{cardTitle}/{description}/{deadline}/{cardId}")]
-        [ActionName("UpdateCard")]
-        public async void UpdateCardWithParameters(String cardTitle, String description, String deadline, String cardId )
-        {
-            DateTime deadlineTime = Convert.ToDateTime(deadline);
-
-            sqlCmd.CommandText = "UPDATE [CONTENT MANAGEMENT].[CARD] SET Title = @Title, Description = @Description, Deadline = @Deadline WHERE CardId = @CardId";
-            sqlCmd.Connection = myConnection;
-
-            sqlCmd.Parameters.Add(new SqlParameter("@Title", cardTitle));
-            sqlCmd.Parameters.Add(new SqlParameter("@Description", description));
-            sqlCmd.Parameters.Add(new SqlParameter("@Deadline", deadlineTime));
-            sqlCmd.Parameters.Add(new SqlParameter("@CardId", cardId));
-
-            try
-            {
-                myConnection.Open();
-                sqlCmd.ExecuteNonQuery();
-                Console.WriteLine("Records Updated Successfully");
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine("Error Generated. Details: " + e.ToString());
-            }
-            finally
-            {
-                myConnection.Close();
-            }
-        }
-        [HttpGet("search-card/{title}/{userId}")]
-        [ActionName("SearchCard")]
-        public async Task<ActionResult<IEnumerable<Card>>> SearchCardWithTitle(String title, String userId)
-        {
-            sqlCmd.CommandText = "SELECT CardId, Title, Description, a.BoardId, Deadline, CreatedAt FROM [CONTENT MANAGEMENT].[CARD] as a INNER JOIN [CONTENT MANAGEMENT].[BOARD] as b ON a.BoardId = b.BoardId WHERE Title = @Title AND b.OwnerId = @UserId";
-            sqlCmd.Connection = myConnection;
-            sqlCmd.Parameters.Add(new SqlParameter("@Title", title));
-            sqlCmd.Parameters.Add(new SqlParameter("@UserId", userId));
-            myConnection.Open();
-            reader = sqlCmd.ExecuteReader();
-
-            List<Card> cardList = new List<Card>();
-            Card card = null;
-            while (reader.Read())
-            {
-                if(title == (String)reader.GetValue(1)){
-                    card = new Card();
-                    card.CardId = (Guid)reader.GetValue(0);
-                    card.Title = (String)reader.GetValue(1);
-                    card.Description = (String)reader.GetValue(2);
-                    card.BoardId = (Guid)reader.GetValue(3);
-                    card.Deadline = (DateTime)reader.GetValue(4);
-                    card.CreatedAt = (DateTime)reader.GetValue(5);
-                    cardList.Add(card);
-                }
-            }
-            return cardList;
-
-            myConnection.Close();
-        }
-
-        [HttpGet("search-cards/{deadlineBegin}/{deadlineEnd}/{userId}")]
-        [ActionName("SearchCards")]
-        public async Task<ActionResult<IEnumerable<Card>>> SearchCardWithDate(String deadlineBegin, String deadlineEnd, String userId) 
-        {
-            DateTime beginDateT = Convert.ToDateTime(deadlineBegin);
-            DateTime endDateT = Convert.ToDateTime(deadlineEnd);
-
-            sqlCmd.CommandText = "SELECT CardId, Title, Description, a.BoardId, Deadline, CreatedAt FROM [CONTENT MANAGEMENT].[CARD] as a INNER JOIN [CONTENT MANAGEMENT].[BOARD] as b ON a.BoardId = b.BoardId WHERE b.OwnerId = @UserId";
-             //   "WHERE " + beginDateT + " <= Deadline";
-            //    "WHERE " + beginDateT + " <= Deadline AND " + endDateT + " >= Deadline";
-              sqlCmd.Connection = myConnection;
-              sqlCmd.Parameters.Add(new SqlParameter("@UserId", userId));
-              myConnection.Open();
-              reader = sqlCmd.ExecuteReader();
-
-
-            List <Card> cardList = new List<Card>();
-            Card card = null;
-            while (reader.Read())
-            {
-                if (beginDateT <= (DateTime)reader.GetValue(4)  && endDateT >= (DateTime)reader.GetValue(4))
-               {
-                    card = new Card();
-                    card.CardId = (Guid)reader.GetValue(0);
-                    card.Title = (String)reader.GetValue(1);
-                    card.Description = (String)reader.GetValue(2);
-                    card.BoardId = (Guid)reader.GetValue(3);
-                    card.Deadline = (DateTime)reader.GetValue(4);
-                    card.CreatedAt = (DateTime)reader.GetValue(5);
-                    cardList.Add(card);
-                }
-            }
-            return cardList;
-
-         //   myConnection.Close();
-        }
+        
+        
     }
 }
