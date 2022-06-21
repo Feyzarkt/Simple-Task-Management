@@ -13,9 +13,9 @@ $(document).ready(function () {
         console.log("nolur nolmaz." + cardName);
         var description = document.getElementById("desc").value;
         var deadline = document.getElementById("deadline").value;
-        var boardId = "4a79f69b-5982-402c-bc12-6efd87fd99a4";
+        var boardId = sessionStorage.getItem("boardId");
         createCard(cardName, description, deadline, boardId);
-    
+        window.location.href = "cards.html";
 
 
 

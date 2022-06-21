@@ -43,12 +43,12 @@ createButton.addEventListener("click", (e) => {
     e.preventDefault();
     const boardTitle = createForm.name.value;
     
-    var userId = "b418ea3f-4835-4a87-be14-1c99dc3b291e";
+    var userId = sessionStorage.getItem("userid")
     var boardName = "boarddd";
 
     boardName  = document.getElementById("createboardinput").value;
     createBoard(boardName, userId);
-
+    window.location.href = "boards.html"
 })
 function getBoards(userId){
     //on click for <a> element
@@ -109,8 +109,9 @@ function getBoards(userId){
 
 
 function getBoardsForCards(){
+    var userId = sessionStorage.getItem("userid")
     //on click for <a> element
-    $.getJSON( "http://localhost:5288/TaskManagement/get-boards-with-user-id/b418ea3f-4835-4a87-be14-1c99dc3b291e", function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
+    $.getJSON( "http://localhost:5288/TaskManagement/get-boards-with-user-id/"+userId, function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
     $.each( data, function(key, value) {
     console.log("veriler geliyormu");
     

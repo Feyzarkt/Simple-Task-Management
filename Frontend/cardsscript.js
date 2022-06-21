@@ -39,6 +39,9 @@ function getCards(){
              
              carddesc = document.createElement("div");
              carddesc.className = "card-desc";
+
+             carddeadline = document.createElement("div");
+             //carddeadline.className = "card-title";
              
              deletebutton = document.createElement("button");
              deletebutton.className = "button buttonim";
@@ -65,13 +68,19 @@ function getCards(){
                  carddescnode = document.createTextNode(data[key].description);
                  carddesc.appendChild(carddescnode);
              }
+
+             if(data[key].deadline){
+                carddescnode2 = document.createTextNode(data[key].deadline);
+                carddeadline.appendChild(carddescnode2);
+            }
  
              element.appendChild(carddiv);
              
              carddiv.appendChild(cardbody);
              
              cardbody.appendChild(cardtitle);
-             cardbody.appendChild(carddesc);
+             cardbody.appendChild(carddesc);                
+             cardbody.appendChild(carddeadline);
              cardbody.appendChild(deletebutton);
              cardbody.appendChild(updatebutton);
  
@@ -83,7 +92,7 @@ function getCards(){
 
 function deleteCard(id){
     console.log("delete içine girdim");
-    fetch('http://localhost:5288/TaskManagement/delete-card/'+id, {
+    fetch('http://localhost:5288/TaskManagement/delete-card-with-card-id/'+id, {
         method: "DELETE",
         headers: {
             'Content-type': 'application/json'

@@ -386,12 +386,14 @@ namespace TaskManagementWebApi.Controllers
                 myConnection.Close();
             }
         }
-        [HttpGet("search-card/{title}")]
+        [HttpGet("search-card/{title}/{userId}")]
         [ActionName("SearchCard")]
-        public async Task<ActionResult<IEnumerable<Card>>> SearchCardWithTitle(String title)
+        public async Task<ActionResult<IEnumerable<Card>>> SearchCardWithTitle(String title, String userId)
         {
-            sqlCmd.CommandText = "SELECT * FROM [CONTENT MANAGEMENT].[CARD]";
+            sqlCmd.CommandText = "SELECT CardId, Title, Description, a.BoardId, Deadline, CreatedAt FROM [CONTENT MANAGEMENT].[CARD] as a INNER JOIN [CONTENT MANAGEMENT].[BOARD] as b ON a.BoardId = b.BoardId WHERE Title = @Title AND b.OwnerId = @UserId";
             sqlCmd.Connection = myConnection;
+            sqlCmd.Parameters.Add(new SqlParameter("@Title", title));
+            sqlCmd.Parameters.Add(new SqlParameter("@UserId", userId));
             myConnection.Open();
             reader = sqlCmd.ExecuteReader();
 
@@ -415,17 +417,18 @@ namespace TaskManagementWebApi.Controllers
             myConnection.Close();
         }
 
-        [HttpGet("search-cards/{deadlineBegin}/{deadlineEnd}")]
+        [HttpGet("search-cards/{deadlineBegin}/{deadlineEnd}/{userId}")]
         [ActionName("SearchCards")]
-        public async Task<ActionResult<IEnumerable<Card>>> SearchCardWithDate(String deadlineBegin, String deadlineEnd) 
+        public async Task<ActionResult<IEnumerable<Card>>> SearchCardWithDate(String deadlineBegin, String deadlineEnd, String userId) 
         {
             DateTime beginDateT = Convert.ToDateTime(deadlineBegin);
             DateTime endDateT = Convert.ToDateTime(deadlineEnd);
 
-            sqlCmd.CommandText = "SELECT * FROM [CONTENT MANAGEMENT].[CARD]";// +
+            sqlCmd.CommandText = "SELECT CardId, Title, Description, a.BoardId, Deadline, CreatedAt FROM [CONTENT MANAGEMENT].[CARD] as a INNER JOIN [CONTENT MANAGEMENT].[BOARD] as b ON a.BoardId = b.BoardId WHERE b.OwnerId = @UserId";
              //   "WHERE " + beginDateT + " <= Deadline";
             //    "WHERE " + beginDateT + " <= Deadline AND " + endDateT + " >= Deadline";
               sqlCmd.Connection = myConnection;
+              sqlCmd.Parameters.Add(new SqlParameter("@UserId", userId));
               myConnection.Open();
               reader = sqlCmd.ExecuteReader();
 

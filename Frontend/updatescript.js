@@ -23,6 +23,7 @@ $(document).ready(function () {
          updatedescription.value="";
          updatedeadline.value="";
          alert(cardName+" is updated!");
+         window.location.href = "cards.html";
          
  
  

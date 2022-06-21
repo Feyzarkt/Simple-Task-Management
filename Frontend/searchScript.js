@@ -6,6 +6,7 @@ var cardnode;
 var cardbody;
 var cardtitle;
 var carddesc;
+var carddeadline;
 var deletebutton;
 
 $(document).ready(function () {
@@ -41,9 +42,10 @@ $(document).ready(function () {
 
 function getCardsFromTitle(cardname){
    console.log("document is ready!");
+   var userId = sessionStorage.getItem("userid");
    element.innerHTML = "";
     //on click for <a> element
-    $.getJSON( "http://localhost:5288/TaskManagement/search-card/"+cardname, function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
+    $.getJSON( "http://localhost:5288/TaskManagement/search-card/"+cardname + "/" + userId, function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
         $.each( data, function(key, value) {
                 console.log("veriler geliyormu");
                 console.log(data[key]);
@@ -58,11 +60,10 @@ function getCardsFromTitle(cardname){
             
             carddesc = document.createElement("div");
             carddesc.className = "card-desc";
+
+            carddeadline = document.createElement("div");
+            carddeadline.className = "card-desc";
             
-            seebutton = document.createElement("button");
-            seebutton.className = "button buttonim";
-            seenode = document.createTextNode("See Card");
-            seebutton.appendChild(seenode);
 
             console.log("veriler geldi mi:");
             console.log(data[key]);
@@ -76,13 +77,17 @@ function getCardsFromTitle(cardname){
                 carddescnode = document.createTextNode(data[key].description);
                 carddesc.appendChild(carddescnode);
             }
+            if(data[key].deadline){
+                carddescnode2 = document.createTextNode(data[key].deadline);
+                carddeadline.appendChild(carddescnode2);
+            }
             element.appendChild(carddiv);
             
             carddiv.appendChild(cardbody);
             
             cardbody.appendChild(cardtitle);
-            cardbody.appendChild(carddesc);
-            cardbody.appendChild(seebutton);
+            cardbody.appendChild(carddesc);          
+            cardbody.appendChild(carddeadline);
 
 
         });
@@ -92,8 +97,10 @@ function getCardsFromTitle(cardname){
 
 function getCardsFromDate(beginDate, endDate){
 console.log("document is ready!");
+var userId = sessionStorage.getItem("userid");
+    element.innerHTML = "";
     //on click for <a> element
-    $.getJSON( "http://localhost:5288/TaskManagement/search-cards/"+beginDate+"/"+endDate, function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
+    $.getJSON( "http://localhost:5288/TaskManagement/search-cards/"+beginDate+"/"+endDate + "/" + userId, function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
         $.each( data, function(key, value) {
                 console.log("veriler geliyormu");
                 console.log(data[key]);
@@ -108,14 +115,12 @@ console.log("document is ready!");
             
             carddesc = document.createElement("div");
             carddesc.className = "card-desc";
-            
-            seebutton = document.createElement("button");
-            seebutton.className = "button buttonim";
-            seenode = document.createTextNode("See Card");
-            seebutton.appendChild(seenode);
 
-            console.log("veriler geldi mi:");
-            console.log(data[key]);
+            carddeadline = document.createElement("div");
+            carddeadline.className = "card-desc";
+          
+            console.log("deadline");
+            console.log(data[key].deadline);
             
             if(data[key].title){
                 cardtitlenode = document.createTextNode(data[key].title);
@@ -126,13 +131,19 @@ console.log("document is ready!");
                 carddescnode = document.createTextNode(data[key].description);
                 carddesc.appendChild(carddescnode);
             }
+
+            if(data[key].deadline){
+                carddescnode2 = document.createTextNode(data[key].deadline);
+                carddeadline.appendChild(carddescnode2);
+            }
+
             element.appendChild(carddiv);
             
             carddiv.appendChild(cardbody);
             
             cardbody.appendChild(cardtitle);
             cardbody.appendChild(carddesc);
-            cardbody.appendChild(seebutton);
+            cardbody.appendChild(carddeadline);
 
 
         });
@@ -143,3 +154,10 @@ console.log("document is ready!");
    
  
 
+    function seeBoard(id){
+        var boardId = id;
+        console.log("see boadr");
+        console.log(boardId);
+        sessionStorage.setItem("boardId", boardId);
+        window.location.href="cards.html";
+    }
