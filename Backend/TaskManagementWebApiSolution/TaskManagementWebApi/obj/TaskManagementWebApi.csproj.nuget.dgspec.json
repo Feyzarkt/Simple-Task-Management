@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\cartec\\Documents\\Simple-Task-Management\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj": {}
+    "C:\\Users\\cartec\\Documents\\Simple-Task-Management\\Backend\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\cartec\\Documents\\Simple-Task-Management\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj": {
+    "C:\\Users\\cartec\\Documents\\Simple-Task-Management\\Backend\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\cartec\\Documents\\Simple-Task-Management\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj",
+        "projectUniqueName": "C:\\Users\\cartec\\Documents\\Simple-Task-Management\\Backend\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj",
         "projectName": "TaskManagementWebApi",
-        "projectPath": "C:\\Users\\cartec\\Documents\\Simple-Task-Management\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj",
+        "projectPath": "C:\\Users\\cartec\\Documents\\Simple-Task-Management\\Backend\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj",
         "packagesPath": "C:\\Users\\cartec\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\cartec\\Documents\\Simple-Task-Management\\TaskManagementWebApiSolution\\TaskManagementWebApi\\obj\\",
+        "outputPath": "C:\\Users\\cartec\\Documents\\Simple-Task-Management\\Backend\\TaskManagementWebApiSolution\\TaskManagementWebApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

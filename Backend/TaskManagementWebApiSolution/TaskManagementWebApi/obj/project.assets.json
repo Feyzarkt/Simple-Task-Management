@@ -3078,11 +3078,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\cartec\\Documents\\Simple-Task-Management\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj",
+      "projectUniqueName": "c:\\Users\\cartec\\Documents\\Simple-Task-Management\\Backend\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj",
       "projectName": "TaskManagementWebApi",
-      "projectPath": "C:\\Users\\cartec\\Documents\\Simple-Task-Management\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj",
+      "projectPath": "c:\\Users\\cartec\\Documents\\Simple-Task-Management\\Backend\\TaskManagementWebApiSolution\\TaskManagementWebApi\\TaskManagementWebApi.csproj",
       "packagesPath": "C:\\Users\\cartec\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\cartec\\Documents\\Simple-Task-Management\\TaskManagementWebApiSolution\\TaskManagementWebApi\\obj\\",
+      "outputPath": "c:\\Users\\cartec\\Documents\\Simple-Task-Management\\Backend\\TaskManagementWebApiSolution\\TaskManagementWebApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
