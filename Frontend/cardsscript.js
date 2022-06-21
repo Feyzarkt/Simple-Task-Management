@@ -12,6 +12,9 @@ var deletenode;
 var updatebutton;
 var updatenode;
 $(document).ready(function () {
+    const boardname= sessionStorage.getItem("boardname"); 
+    console.log(boardname)
+    document.getElementById("boardtitlehtml").textContent = boardname;
     getCards();
 }); 
 

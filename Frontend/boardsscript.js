@@ -56,10 +56,11 @@ function getBoards(userId){
 
     seebutton = document.createElement("button");
     seebutton.className = "button buttonim";
+    seebutton.name = data[key].name;
     seebutton.id = data[key].boardId;
     seenode = document.createTextNode("See Board");
     seebutton.appendChild(seenode);
-    seebutton.setAttribute('onclick','seeBoard(this.id);');
+    seebutton.setAttribute('onclick','seeBoard(this.id, this.name);');
     console.log(data[key].boardId);
     var guid=  '<%=Request.QueryString[data[key].boardId]%>';
 
@@ -116,11 +117,12 @@ function getBoardsForCards(){
     
 
 //Feyza-bunu seeboard butonunun on click ine vericez board id yi storage a atıyor olucaz cards sayfasında çekicez
-function seeBoard(id){
+function seeBoard(id, name){
     var boardId = id;
     console.log("see boadr");
     console.log(boardId);
     sessionStorage.setItem("boardId", boardId);
+    sessionStorage.setItem("boardname", name);
     window.location.href="cards.html";
 }
 
