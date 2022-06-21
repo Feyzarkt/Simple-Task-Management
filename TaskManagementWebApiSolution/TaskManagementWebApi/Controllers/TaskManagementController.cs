@@ -229,11 +229,11 @@ namespace TaskManagementWebApi.Controllers
         }
 
 
-        [HttpDelete("delete-board/{board}")]
+        [HttpDelete("delete-board/{boardId}")]
         [ActionName("DeleteBoard")]
         public async void DeleteBoard(Guid boardId)
         {
-            sqlCmd.CommandText = "DELETE FROM [CONTENT MANAGEMENT].[BOARD] WHERE BoardId = @BoardId";
+            sqlCmd.CommandText = "DELETE FROM [CONTENT MANAGEMENT].[BOARD] WHERE BoardId = " +  "'" + boardId + "'";
             sqlCmd.Connection = myConnection;
             
             sqlCmd.Parameters.Add(new SqlParameter("@BoardId", boardId));
@@ -254,14 +254,39 @@ namespace TaskManagementWebApi.Controllers
             }
         }
 
-        [HttpDelete("delete-card/{cardId}")]
-        [ActionName("DeleteCard")]
-        public async void DeleteCard(Guid cardId)
+        [HttpDelete("delete-card-with-card-id/{cardId}")]
+        [ActionName("DeleteCardWithCardId")]
+        public async void DeleteCardWithCardId(Guid cardId)
         {
             sqlCmd.CommandText = "DELETE FROM [CONTENT MANAGEMENT].[CARD] WHERE CardId = @CardId";
             sqlCmd.Connection = myConnection;
             
             sqlCmd.Parameters.Add(new SqlParameter("@CardId", cardId));
+
+            try
+            {
+                myConnection.Open();
+                sqlCmd.ExecuteNonQuery();
+                Console.WriteLine("Records Deleted Successfully");
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine("Error Generated. Details: " + e.ToString());
+            }
+            finally
+            {
+                myConnection.Close();
+            }
+        }
+
+        [HttpDelete("delete-card-with-board-id/{boardId}")]
+        [ActionName("DeleteCardWithBoardId")]
+        public async void DeleteCardWithBoardId(Guid boardId)
+        {
+            sqlCmd.CommandText = "DELETE FROM [CONTENT MANAGEMENT].[CARD] WHERE BoardId = @BoardId";
+            sqlCmd.Connection = myConnection;
+
+            sqlCmd.Parameters.Add(new SqlParameter("@BoardId", boardId));
 
             try
             {

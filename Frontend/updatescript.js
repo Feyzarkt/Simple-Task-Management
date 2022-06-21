@@ -1,3 +1,9 @@
+var updatetitle;
+var updatedescription;
+var updatedeadline;
+
+
+
 $(document).ready(function () {
 
 
@@ -12,9 +18,12 @@ $(document).ready(function () {
          console.log("nolur nolmaz." + cardName);
          var description = document.getElementById("updatedesc").value;
          var deadline = document.getElementById("updatedeadline").value;
-         var cardId = "bc2296e8-8fe0-491c-a7f5-552eda64b4ea";
-         updateCard(cardName, description, deadline, cardId);
-     
+         updateCard(cardName, description, deadline);
+         updatetitle.value="";
+         updatedescription.value="";
+         updatedeadline.value="";
+         alert(cardName+" is updated!");
+         
  
  
  
@@ -32,33 +41,35 @@ $(document).ready(function () {
   function getCards(){
     console.log("document is ready!");
      //on click for <a> element
-     $.getJSON( "http://localhost:5288/TaskManagement/get-cards-with-board-id/4a79f69b-5982-402c-bc12-6efd87fd99a4", function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
+     const cardId= sessionStorage.getItem("cardId"); 
+     const boardId = sessionStorage.getItem("boardId");
+     $.getJSON( "http://localhost:5288/TaskManagement/get-cards-with-board-id/"+boardId, function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
          $.each( data, function(key, value) {
                  console.log("veriler geliyormu");
                  console.log(data[key]);
 
-
+                    if(data[key].cardId == cardId){
                  if(data[key].title){
-                    var updatetitle = document.getElementById("updatetitle");
+                    updatetitle = document.getElementById("updatetitle");
                     console.log(data[key].title);
-                    updatetitle.placeholder = data[key].title;
+                    updatetitle.value = data[key].title;
 
                  }
 
                  if(data[key].description){
-                    var updatedescription = document.getElementById("updatedesc");
+                    updatedescription = document.getElementById("updatedesc");
                     console.log(data[key].description);
-                    updatedescription.placeholder = data[key].description;
+                    updatedescription.value = data[key].description;
 
                 }
 
                 if(data[key].deadline){
-                    var updatedeadline = document.getElementById("updatedeadline");
+                    updatedeadline = document.getElementById("updatedeadline");
                     console.log(data[key].deadline);
-                    updatedeadline.placeholder = data[key].deadline;
+                    updatedeadline.value = data[key].deadline;
 
                 }
-               
+               }
 
 
 
@@ -72,8 +83,11 @@ $(document).ready(function () {
      }
 
 
-function updateCard(cardName, description, deadline, cardId){  //burda board ları gösterme değil de create etme yapcaz. parametre olarak boardname ve ownerıd al, local storage
+function updateCard(cardName, description, deadline){  //burda board ları gösterme değil de create etme yapcaz. parametre olarak boardname ve ownerıd al, local storage
     //on click for <a> element
+    
+    const cardId= sessionStorage.getItem("cardId"); 
+
     var url = "http://localhost:5288/TaskManagement/update-card-with-parameters/"+cardName+"/"+description+"/"+deadline+"/"+cardId;
     
     fetch(url, {
@@ -86,6 +100,7 @@ function updateCard(cardName, description, deadline, cardId){  //burda board lar
         else { console.log("HTTP request unsuccessful") }
         return res
     })
+   
    
     
 }
