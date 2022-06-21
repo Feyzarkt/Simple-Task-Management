@@ -9,7 +9,7 @@ body {
 .form {
     border-radius: 3px;
     padding: 10px 15px;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .input {
@@ -18,7 +18,7 @@ body {
     padding: 7px 10px;
     border-radius: 2px;
     color: #fff;
-    background-color: #554c57;
+    background-color: #afafaf;
     border: none;
 }
 
@@ -96,3 +96,27 @@ ul {
 	border-bottom: 3px solid #5994FF;
 	color: #D2E2FF;
   }
+
+.flex-title {
+    margin-bottom: 15px;
+    font-size: 2em;
+    text-align: center;
+    font-weight: 700;
+    color: #555;
+    padding: 5px;
+}
+
+.buttonim{
+    background: #2471FF;
+	border: none;
+	padding: 10px 20px 10px 20px;
+	border-bottom: 3px solid #5994FF;
+	border-radius: 3px;
+	color: #D2E2FF;
+    margin-left: 20px;
+}
+
+.buttonim:hover{
+    background: #6B9FFF;
+	color:#fff;
+}

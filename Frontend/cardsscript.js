@@ -44,12 +44,16 @@ function getCards(){
              deletebutton.className = "button buttonim";
              deletenode = document.createTextNode("Delete");
              deletebutton.appendChild(deletenode);
-             deletebutton.setAttribute('onclick','deleteCard("c7ab2e7f-2f3b-4332-bc4c-937f452f5e9e");');
+             deletebutton.id = data[key].cardId;
+             deletebutton.setAttribute('onclick','deleteCard(this.id);');
              
              updatebutton = document.createElement("button");
              updatebutton.className = "button buttonim";
              updatenode = document.createTextNode("Update");
              updatebutton.appendChild(updatenode);
+             updatebutton.id = data[key].cardId;
+             updatebutton.setAttribute('onclick','updateCardButton(this.id);');
+             
              console.log("veriler geldi mi:");
              console.log(data[key]);
              
@@ -91,6 +95,18 @@ function deleteCard(id){
     })
      window.location.reload();
 }
+
+
+
+function updateCardButton(id){
+    var cardId = id;
+    console.log("see boadr");
+    console.log(cardId);
+    sessionStorage.setItem("cardId", cardId);
+    window.location.href="updatecard.html";
+    }
+
+
 
 
 
