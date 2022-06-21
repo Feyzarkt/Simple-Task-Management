@@ -11,3 +11,17 @@ The task manager application is a general-purpose project management tool that a
 
 ![image](https://user-images.githubusercontent.com/60755254/174807440-3d97f733-1339-4d3a-a267-cd575c33a793.png)
 
+# Screenshots
+
+![image](https://user-images.githubusercontent.com/60755254/174809199-d39ba0e5-7887-4d03-b2e3-4ad473f24765.png)
+
+![image](https://user-images.githubusercontent.com/60755254/174809447-67681e61-477e-4d57-8b45-aefb136cea56.png)
+
+![image](https://user-images.githubusercontent.com/60755254/174809551-bef96b76-1255-49df-8d28-b4a372d2907b.png)
+
+![image](https://user-images.githubusercontent.com/60755254/174809630-171a355a-4274-4cde-9711-84e3f5b2978d.png)
+
+![image](https://user-images.githubusercontent.com/60755254/174809745-a81504b7-490d-4920-954c-70af9476a226.png)
+
+![image](https://user-images.githubusercontent.com/60755254/174809898-224288f5-6637-4799-81d4-7a2e9ec914ea.png)
+
