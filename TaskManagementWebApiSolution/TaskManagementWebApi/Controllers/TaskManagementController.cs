@@ -18,6 +18,32 @@ namespace TaskManagementWebApi.Controllers
             sqlCmd.CommandType = CommandType.Text;
         }
 
+        [HttpGet("login/{userName}/{password}")]
+        [ActionName("Login")]
+        public async Task<ActionResult<User>> Login(String userName, String password)
+        {
+            sqlCmd.CommandText = "SELECT * FROM [COMMON].[User]";
+            sqlCmd.Connection = myConnection;
+            myConnection.Open();
+            reader = sqlCmd.ExecuteReader();
+            
+            User user = null;
+            while (reader.Read())
+            {
+                if(userName == (String)reader.GetValue(1) && password == (String)reader.GetValue(3)){
+                    user = new User();
+                    user.UserId = (Guid)reader.GetValue(0);
+                    user.Name = (String)reader.GetValue(1);
+                    user.eMail = (String)reader.GetValue(2);
+                    user.password = (String)reader.GetValue(3);
+                }
+                    
+            }
+            return user;
+
+            myConnection.Close();
+        }
+
         [HttpGet("get-users")]
         [ActionName("GetUser")]
         public async Task<ActionResult<IEnumerable<User>>> Get()

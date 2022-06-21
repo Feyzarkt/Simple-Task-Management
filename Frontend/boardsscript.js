@@ -16,19 +16,10 @@ var seebutton;
 $(document).ready(function () {
 
    console.log("document is ready!");
-   getBoards();
 
-//    const seeButton2 = document.getElementById("seebuttonid");
-//    seeButton2.addEventListener("click", (e) => {
-//        e.preventDefault();
-  
-   
-//        seeBoard();
-//    })
-
-
-  // createBoard();
- 
+   var userId = sessionStorage.getItem("userid")
+   console.log(userId);
+   getBoards(userId);
    
 }); 
 
@@ -59,9 +50,9 @@ createButton.addEventListener("click", (e) => {
     createBoard(boardName, userId);
 
 })
-function getBoards(){
+function getBoards(userId){
     //on click for <a> element
-    $.getJSON( "http://localhost:5288/TaskManagement/get-boards-with-user-id/b418ea3f-4835-4a87-be14-1c99dc3b291e", function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
+    $.getJSON( "http://localhost:5288/TaskManagement/get-boards-with-user-id/"+userId, function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
     $.each( data, function(key, value) {
     console.log("veriler geliyormu");
     console.log(data[key]);

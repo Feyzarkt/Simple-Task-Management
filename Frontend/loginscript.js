@@ -2,21 +2,33 @@ const loginForm = document.getElementById("login-form");
 const loginButton = document.getElementById("login-form-submit");
 const loginErrorMsg = document.getElementById("login-error-msg");
 
+$(document).ready(function () {
+
+    console.log("document is ready!");
+ 
+}); 
+
 loginButton.addEventListener("click", (e) => {
     e.preventDefault();
     const username = loginForm.username.value;
     const password = loginForm.password.value;
 
-    if (username === "user" && password === "web_dev") {
-        alert("You have successfully logged in.");
-     //   location.reload();
-        window.location.href='boards.html';
-    } else {
-        location.reload();
-        loginErrorMsg.style.opacity = 1;
-    }
+    login(username, password)
 })
 
+function login(username, password){
+    //on click for <a> element
+    console.log("ilk veriler geliyormu");
+    $.getJSON( 'http://localhost:5288/TaskManagement/login/'+username+"/"+password, function( data ) {
+        if(data != null){
+            console.log(data["userId"]);
+            alert("You have successfully logged in.");
+            sessionStorage.setItem("userid", data["userId"])
+            window.location.href='boards.html';
+        }else alert("Username or password are wrong.");
+    });
+   
+}
 function handleSubmit () {
     const username = loginForm.username.value;
     const password = loginForm.password.value;
