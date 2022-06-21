@@ -29,16 +29,3 @@ function login(username, password){
     });
    
 }
-function handleSubmit () {
-    const username = loginForm.username.value;
-    const password = loginForm.password.value;
-
-    // to set into local storage
-    /* localStorage.setItem("NAME", name);
-    localStorage.setItem("SURNAME", surname); */
-    
-    sessionStorage.setItem("USERNAME", username);
-    sessionStorage.setItem("PASSWORD", password);
-
-    return;
-}

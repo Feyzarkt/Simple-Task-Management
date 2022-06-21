@@ -12,7 +12,6 @@ var deletenode;
 var updatebutton;
 var updatenode;
 $(document).ready(function () {
-    /*VERİLERİ GETİRME */
     getCards();
 }); 
 
@@ -21,9 +20,6 @@ function getCards(){
     console.log("document is ready!");
      //on click for <a> element
      const boardId= sessionStorage.getItem("boardId"); 
-
-     console.log("getcards00");
-     console.log(boardId);
      $.getJSON( "http://localhost:5288/TaskManagement/get-cards-with-board-id/"+boardId, function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
          $.each( data, function(key, value) {
                  console.log("veriler geliyormu");
@@ -105,27 +101,11 @@ function deleteCard(id){
      window.location.reload();
 }
 
-
-
 function updateCardButton(id){
     var cardId = id;
     console.log("see boadr");
     console.log(cardId);
     sessionStorage.setItem("cardId", cardId);
     window.location.href="updatecard.html";
-    }
+}
 
-
-
-
-
-
-
-/* $.getJSON( "http://localhost:5288/TaskManagement", function( data ) {
-        var items = [];
-        $.each( data, function() {
-    
-            console.log(data.name);
-        });
-       
-      });*/

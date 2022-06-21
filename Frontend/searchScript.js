@@ -10,17 +10,13 @@ var carddeadline;
 var deletebutton;
 
 $(document).ready(function () {
-    /*VERİLERİ GETİRME */
- //   getCardsFromTitle();
- //   getCardsFromDate();
-
     //onclick event for search with title
     const searchForm = document.getElementById("i66j");
     const searchButton = document.getElementById("search-form-submit");
 
     searchButton.addEventListener("click", (e) => {
         e.preventDefault();
-       var cardname = document.getElementById("searchcardbyname").value;
+        var cardname = document.getElementById("searchcardbyname").value;
        
         getCardsFromTitle(cardname);
                
@@ -151,13 +147,3 @@ var userId = sessionStorage.getItem("userid");
     });
     }
 
-   
- 
-
-    function seeBoard(id){
-        var boardId = id;
-        console.log("see boadr");
-        console.log(boardId);
-        sessionStorage.setItem("boardId", boardId);
-        window.location.href="cards.html";
-    }

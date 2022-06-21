@@ -6,16 +6,12 @@ var updatedeadline;
 
 $(document).ready(function () {
 
-
-    // createBoard();
     const updateButton = document.getElementById("updatecardbutton");
-    //create card button onclick 
+
     updateButton.addEventListener("click", (e) => {
-         console.log("geldi mi buraya");
          e.preventDefault();
          
          var cardName = document.getElementById("updatetitle").value;
-         console.log("nolur nolmaz." + cardName);
          var description = document.getElementById("updatedesc").value;
          var deadline = document.getElementById("updatedeadline").value;
          updateCard(cardName, description, deadline);
@@ -25,16 +21,6 @@ $(document).ready(function () {
          alert(cardName+" is updated!");
          window.location.href = "cards.html";
          
- 
- 
- 
-     // if (boardTitle === "") {
-         //    location.reload();
-         // createBoard(boardName, userId);
-         // } else {
-         //     alert("Please enter a board name " + boardTitle);
-         //     location.reload();
-         // }
      })
      getCards();
   }); 
@@ -71,12 +57,6 @@ $(document).ready(function () {
 
                 }
                }
-
-
-
-
-
-
  
          });
         
@@ -86,7 +66,6 @@ $(document).ready(function () {
 
 function updateCard(cardName, description, deadline){  //burda board ları gösterme değil de create etme yapcaz. parametre olarak boardname ve ownerıd al, local storage
     //on click for <a> element
-    
     const cardId= sessionStorage.getItem("cardId"); 
 
     var url = "http://localhost:5288/TaskManagement/update-card-with-parameters/"+cardName+"/"+description+"/"+deadline+"/"+cardId;
@@ -101,7 +80,5 @@ function updateCard(cardName, description, deadline){  //burda board ları göst
         else { console.log("HTTP request unsuccessful") }
         return res
     })
-   
-   
     
 }

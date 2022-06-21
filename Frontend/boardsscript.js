@@ -23,19 +23,6 @@ $(document).ready(function () {
    
 }); 
 
-window.addEventListener('load', () => {
- 
-    const username = sessionStorage.getItem('USERNAME');
-    const password = sessionStorage.getItem('PASSWORD');
-    
-    
-    //document.getElementById('result-name').innerHTML = username;
-   // document.getElementById('result-surname').innerHTML = surname;
-
-  // alert("username and password: " + username + password);  
-   
-})
-
 //onclick event for create board
 const createForm = document.getElementById("board-form");
 const createButton = document.getElementById("board-form-create");
@@ -44,12 +31,13 @@ createButton.addEventListener("click", (e) => {
     const boardTitle = createForm.name.value;
     
     var userId = sessionStorage.getItem("userid")
-    var boardName = "boarddd";
+    var boardName;
 
     boardName  = document.getElementById("createboardinput").value;
     createBoard(boardName, userId);
     window.location.href = "boards.html"
 })
+
 function getBoards(userId){
     //on click for <a> element
     $.getJSON( "http://localhost:5288/TaskManagement/get-boards-with-user-id/"+userId, function( data ) {/*Şimdilik new jsonla deneme yaptım. Çekerken new json yazan yere yukarıdaki urlyi yapıştırıcaz. */
@@ -83,11 +71,6 @@ function getBoards(userId){
     deletebutton.appendChild(deletenode);
     deletebutton.setAttribute('onclick','deleteBoard(this.id);');
 
-    console.log("meslea");
-    console.log(data[key].boardId);
-        //seebutton.setAttribute('data-sku', data[key].boardId); // Feyza
-        
-    
     console.log("veriler geldi mi:");
     console.log(data[key]);
 
@@ -140,7 +123,6 @@ function seeBoard(id){
     sessionStorage.setItem("boardId", boardId);
     window.location.href="cards.html";
 }
-
 
 function createBoard(boardName, userId){  //burda board ları gösterme değil de create etme yapcaz. parametre olarak boardname ve ownerıd al, local storage
     //on click for <a> element
